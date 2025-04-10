@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>OdontoApp - Sistema de Gestión Dental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <h2>OdontoApp</h2>
+            <ul>
+                <li><a href="/pacientes" class="nav-link">Pacientes</a></li>
+                <li><a href="/citas" class="nav-link">Citas</a></li>
+                <li><a href="/historias" class="nav-link">Historias Clínicas</a></li>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            <header>
+                <h1>Panel de Control</h1>
+            </header>
+            
+            <div class="dashboard-grid">
+                <div class="calendar-container">
+                    <h2>Calendario de Citas</h2>
+                    <div id="calendar"></div>
+                </div>
+                
+                <div class="quick-actions">
+                    <h2>Acciones Rápidas</h2>
+                    <a href="/pacientes/nuevo" class="action-button">Nuevo Paciente</a>
+                    <a href="/citas/nueva" class="action-button">Nueva Cita</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'timeGridWeek',
+                slotMinTime: '08:00:00',
+                slotMaxTime: '20:00:00',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: '/api/citas'
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html>
